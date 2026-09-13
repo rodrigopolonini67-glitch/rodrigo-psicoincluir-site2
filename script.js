@@ -55,3 +55,12 @@ if (lightbox && lightboxImage && lightboxClose && galleryButtons.length) {
     if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
   });
 }
+
+const whatsappFloat = document.createElement('a');
+whatsappFloat.className = 'whatsapp-float';
+whatsappFloat.href = ['https://wa.me/', '5551997803232'].join('');
+whatsappFloat.target = '_blank';
+whatsappFloat.rel = 'noopener noreferrer';
+whatsappFloat.setAttribute('aria-label', 'Falar com a PsicoIncluir pelo WhatsApp');
+whatsappFloat.innerHTML = '<span aria-hidden="true">◔</span><span>WhatsApp</span>';
+document.body.appendChild(whatsappFloat);
