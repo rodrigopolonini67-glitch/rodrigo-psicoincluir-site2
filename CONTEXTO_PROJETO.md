@@ -106,7 +106,7 @@ Não inventar informações institucionais que não tenham sido fornecidas ou va
 
 ## Padrões obrigatórios de motion, carregamento e feedback
 
-A interface deve seguir princípios de motion design com foco em **propósito, sutileza, consistência, acessibilidade e performance**, usando como referência a skill **Design Motion Principles** de Kyle Zantos. A skill trabalha com lentes de contenção e velocidade, refinamento de produção e experimentação seletiva; para este site institucional/landing page, a prioridade deve ser o refinamento profissional e discreto, com criatividade apenas quando ela reforçar a identidade da PsicoIncluir. urlDesign Motion Principleshttps://github.com/kylezantos/design-motion-principles
+A interface deve seguir princípios de motion design com foco em **propósito, sutileza, consistência, acessibilidade e performance**, usando como referência a skill **Design Motion Principles** de Kyle Zantos (https://github.com/kylezantos/design-motion-principles). A skill trabalha com lentes de contenção e velocidade, refinamento de produção e experimentação seletiva; para este site institucional/landing page, a prioridade deve ser o refinamento profissional e discreto, com criatividade apenas quando ela reforçar a identidade da PsicoIncluir.
 
 ### Regras de motion
 - Toda animação deve ter uma função clara: orientar, contextualizar uma mudança, melhorar a percepção de resposta ou reforçar a hierarquia.
