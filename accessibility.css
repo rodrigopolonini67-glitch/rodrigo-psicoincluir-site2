@@ -1,0 +1,34 @@
+/* Accessibility foundations: visible focus, skip navigation and readable interaction targets. */
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #1f1740;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-180%);
+  transition: transform 180ms ease;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+:where(a, button, [tabindex]:not([tabindex='-1'])):focus-visible {
+  outline: 3px solid #1f1740;
+  outline-offset: 4px;
+}
+
+:where(.button, .menu-toggle, .space-gallery-button, .space-lightbox-close) {
+  touch-action: manipulation;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-link {
+    transition: none;
+  }
+}
