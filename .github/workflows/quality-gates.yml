@@ -1,0 +1,109 @@
+name: Quality Gates
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: quality-gates-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality-gates:
+    name: quality-gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect Node project
+        id: project
+        shell: bash
+        run: |
+          if [[ -f package.json ]]; then
+            echo "has_node=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_node=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup Node.js
+        if: steps.project.outputs.has_node == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.project.outputs.has_node == 'true'
+        run: npm ci
+
+      - name: Dependency security audit
+        if: steps.project.outputs.has_node == 'true'
+        run: npm audit --audit-level=high
+
+      - name: Lint
+        if: steps.project.outputs.has_node == 'true'
+        shell: bash
+        run: |
+          if node -e "const p=require('./package.json'); process.exit(p.scripts?.lint ? 0 : 1)"; then
+            npm run lint
+          else
+            echo 'No lint script configured yet; gate is not applicable.'
+          fi
+
+      - name: Unit and integration tests
+        if: steps.project.outputs.has_node == 'true'
+        shell: bash
+        run: |
+          if node -e "const p=require('./package.json'); process.exit(p.scripts?.test ? 0 : 1)"; then
+            npm test
+          else
+            echo 'No test script configured yet; gate is not applicable.'
+          fi
+
+      - name: Build
+        if: steps.project.outputs.has_node == 'true'
+        shell: bash
+        run: |
+          if node -e "const p=require('./package.json'); process.exit(p.scripts?.build ? 0 : 1)"; then
+            npm run build
+          else
+            echo 'No build script configured yet; gate is not applicable.'
+          fi
+
+      - name: E2E tests with Playwright when configured
+        if: steps.project.outputs.has_node == 'true'
+        shell: bash
+        run: |
+          if [[ -f playwright.config.ts || -f playwright.config.js || -f playwright.config.mjs ]]; then
+            npx playwright install --with-deps chromium
+            npx playwright test
+          else
+            echo 'Playwright is not configured yet; E2E gate is not applicable.'
+          fi
+
+      - name: Repository hygiene
+        shell: bash
+        run: |
+          if find . -type f \( -name '.env' -o -name '.env.*' \) -not -path './.git/*' | grep -q .; then
+            echo 'Potential environment file committed to the repository.'
+            exit 1
+          fi
+          if grep -RInE 'AKIA[0-9A-Z]{16}|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----' . \
+            --exclude-dir=.git --exclude='quality-gates.yml' >/dev/null 2>&1; then
+            echo 'Potential secret detected in repository contents.'
+            exit 1
+          fi
+
+      - name: Gate summary
+        run: echo 'Quality gates completed for the checks applicable to the current project state.'
