@@ -44,7 +44,9 @@ Closes #XX
 Descrição objetiva das alterações.
 
 ## Como foi validado
-- Testes realizados
+- Lint e format
+- Testes automatizados aplicáveis
+- Build
 - Desktop/mobile quando aplicável
 - Links e CTAs quando aplicável
 - Console sem erros críticos quando aplicável
@@ -59,6 +61,96 @@ Descrição objetiva das alterações.
 ### Regra para agentes
 
 Qualquer agente, independentemente do modelo utilizado, deve consultar este arquivo antes de implementar novas mudanças e respeitar este padrão de Issues, branches, Pull Requests, review, merge e deploy.
+
+## Esteira obrigatória de qualidade antes da `main`
+
+Nenhum código relevante deve entrar na branch `main` sem passar pelos gates aplicáveis ao escopo da alteração. A esteira deve proteger o projeto sem criar complexidade artificial.
+
+### Gate 1 — Rastreabilidade
+- Toda alteração deve estar vinculada a uma Issue.
+- A implementação deve ocorrer em branch própria.
+- O PR deve mencionar a Issue relacionada.
+- Mudanças diretas em `main` são proibidas para trabalho que possa ser entregue por PR.
+
+### Gate 2 — Qualidade de código
+- Executar formatter e lint configurados para a stack.
+- **Biome** é a opção preferencial para projetos JavaScript/TypeScript quando compatível.
+- **Commitlint** pode ser adotado para padronizar commits quando houver benefício real no fluxo do projeto.
+- **Knip** deve ser considerado para identificar arquivos, dependências e exports não utilizados quando o volume de código justificar a análise.
+- **Stryker** deve ser considerado para mutation testing quando houver lógica relevante e cobertura de testes suficiente para que o custo seja justificável.
+- **`arch-contract`** somente deve ser introduzido se existir uma necessidade arquitetural concreta e compatível com a stack.
+- Ferramentas não devem ser adicionadas apenas para cumprir checklist: cada uma precisa ter finalidade e custo-benefício claros.
+
+### Gate 3 — Testes
+A estratégia de testes deve crescer conforme o produto cresce:
+- **Unitários:** lógica reutilizável, utilitários e comportamentos isoláveis.
+- **Integração:** interação entre componentes, módulos, serviços e integrações relevantes.
+- **End-to-end:** fluxos críticos que precisam funcionar como o usuário final os executa.
+- **Playwright** é a opção preferencial para E2E quando compatível com a stack.
+- **Codecov** pode acompanhar cobertura quando existir uma suíte automatizada relevante.
+- **Endtest** só deve ser adotado se houver uma necessidade que não seja atendida adequadamente pela estratégia existente; evitar duplicidade desnecessária com Playwright.
+- Nenhum teste deve ser criado artificialmente apenas para aumentar percentual de cobertura; o objetivo é reduzir risco real.
+
+### Gate 4 — Build e validação funcional
+Antes do merge:
+- build de produção deve concluir sem erros;
+- rotas, navegação, links e CTAs relevantes devem ser validados;
+- WhatsApp, mapa e demais integrações devem ser verificados quando fizerem parte da alteração;
+- console deve ser revisado em busca de erros críticos;
+- comportamento responsivo deve ser verificado conforme o escopo;
+- alterações visuais devem passar por revisão de qualidade como produto, não apenas por compilação.
+
+### Gate 5 — Segurança
+- Fazer revisão de segurança proporcional ao risco da alteração.
+- Qualquer endpoint/backend exposto que realmente precise de proteção contra abuso deve possuir **rate limit** adequado.
+- Não expor segredos, chaves privadas ou credenciais no frontend ou no repositório.
+- Validar entradas e integrações externas quando houver backend ou formulários processados por serviços.
+- Separar claramente responsabilidades de frontend e backend caso backend seja introduzido.
+- Dependências e configurações devem ser revisadas antes de releases relevantes.
+
+### Gate 6 — Performance
+- Definir e respeitar um **performance budget** compatível com um site institucional.
+- Otimizar imagens e recursos antes do deploy.
+- Usar lazy loading quando fizer sentido, principalmente para conteúdo abaixo da primeira dobra.
+- Evitar JavaScript, bibliotecas e recursos desnecessários.
+- Monitorar layout shift, tamanho de assets e tempo de carregamento.
+- Não sacrificar simplicidade arquitetural por otimizações prematuras.
+
+### Gate 7 — Observabilidade
+A observabilidade deve ser proporcional ao porte e à arquitetura do projeto:
+- **Sentry:** considerar para monitoramento de erros do frontend/produção quando houver necessidade de acompanhamento contínuo.
+- **Datadog:** considerar apenas se a operação justificar uma plataforma de observabilidade mais ampla.
+- **New Relic:** alternativa a Datadog quando houver necessidade operacional compatível.
+- **OpenTelemetry:** considerar quando existir necessidade real de instrumentação padronizada, especialmente em arquiteturas com múltiplos serviços.
+- Não adotar Sentry + Datadog + New Relic + OpenTelemetry simultaneamente sem justificativa técnica. Evitar custo, duplicidade e complexidade desnecessários.
+
+### Gate 8 — Conteúdo jurídico
+- Termos de Uso e Política de Privacidade não devem ser inventados pelo agente.
+- Quando esses documentos forem necessários, seu conteúdo deve ser revisado e aprovado pelo jurídico responsável antes de ser considerado final.
+- O agente pode estruturar tecnicamente as páginas e integrações, mas não deve representar conteúdo jurídico não validado como aprovado.
+
+### Gate 9 — Arquitetura e reutilização
+Desde o início da implementação:
+- evitar **overengineering**;
+- evitar gargalos arquiteturais desnecessários;
+- componentizar desde o início, mantendo responsabilidades claras;
+- aplicar **DRY com critério**, evitando abstrações prematuras;
+- reutilizar componentes existentes em vez de reconstruí-los;
+- antes de criar um novo componente, verificar se já existe um componente equivalente ou que possa ser estendido com segurança;
+- preferir soluções simples, legíveis e adequadas ao porte do projeto;
+- não introduzir infraestrutura, serviços ou camadas que não tenham uma necessidade concreta.
+
+### Gate 10 — Review antes do merge
+O PR só deve ser considerado pronto para `main` quando:
+1. a Issue relacionada estiver clara;
+2. a implementação estiver na branch correta;
+3. lint/format aplicáveis estiverem aprovados;
+4. testes aplicáveis estiverem aprovados;
+5. build estiver aprovado;
+6. segurança e performance tiverem sido revisadas conforme o escopo;
+7. a interface tiver sido revisada visualmente quando houver alteração de UI;
+8. riscos, limitações e próximos passos estiverem registrados no PR;
+9. houver review antes do merge.
 
 ## Diretrizes do site
 
@@ -160,6 +252,7 @@ Antes de considerar uma entrega de interface concluída, o agente deve fazer uma
 - #13 — Implementar animações e microinterações
 - #14 — Implementar SEO básico
 - #15 — Preparar imagens reais da clínica
+- #27 — Implantar esteira de qualidade, segurança e gates antes da branch principal
 
 ### Melhoria
 - #16 — Refinar experiência de navegação
