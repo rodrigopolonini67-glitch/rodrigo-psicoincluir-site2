@@ -87,3 +87,39 @@ if ('IntersectionObserver' in window && motionTargets.length) {
 } else {
   motionTargets.forEach((element) => element.classList.add('is-visible'));
 }
+
+// SEO enhancement: keeps the page metadata and local business structured data available
+// even when the hosting setup only serves static HTML/JS assets.
+const seoDescription = 'PsicoIncluir – Clínica Multidisciplinar em Porto Alegre. Cuidado multidisciplinar, acolhimento e inclusão para crianças, adolescentes e adultos.';
+document.title = 'PsicoIncluir | Clínica Multidisciplinar em Porto Alegre';
+const descriptionMeta = document.querySelector('meta[name="description"]');
+if (descriptionMeta) descriptionMeta.setAttribute('content', seoDescription);
+const robotsMeta = document.querySelector('meta[name="robots"]');
+if (!robotsMeta) {
+  const meta = document.createElement('meta');
+  meta.name = 'robots';
+  meta.content = 'index, follow';
+  document.head.appendChild(meta);
+}
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalBusiness',
+  name: 'PsicoIncluir – Clínica Multidisciplinar',
+  description: 'Clínica multidisciplinar com foco em acolhimento, inclusão e cuidado individual.',
+  telephone: '+55 51 99780-3232',
+  email: 'psicoincluir01@gmail.com',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Rua Dezessete de Junho, 489',
+    addressLocality: 'Porto Alegre',
+    addressRegion: 'RS',
+    addressCountry: 'BR'
+  },
+  areaServed: 'Porto Alegre',
+  knowsAbout: ['Psicologia', 'Fonoaudiologia', 'Psicopedagogia', 'Pedagogia', 'Terapia Ocupacional', 'Fisioterapia', 'Nutrição', 'Musicoterapia', 'Arteterapia', 'Psicomotricidade', 'ABA', 'Ambientoterapia']
+};
+const structuredDataScript = document.createElement('script');
+structuredDataScript.type = 'application/ld+json';
+structuredDataScript.textContent = JSON.stringify(structuredData);
+document.head.appendChild(structuredDataScript);
