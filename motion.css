@@ -1,0 +1,90 @@
+/* Motion system: subtle, purposeful feedback for the marketing experience. */
+
+:root {
+  --motion-fast: 180ms;
+  --motion-standard: 320ms;
+  --motion-slow: 500ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Content enters only when it becomes relevant in the viewport. */
+.motion-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity var(--motion-standard) ease, transform var(--motion-standard) var(--motion-ease);
+}
+
+.motion-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* A small amount of hierarchy in the hero; no perpetual or decorative animation. */
+.hero-card-main,
+.hero-card-small {
+  transition: transform var(--motion-standard) var(--motion-ease), box-shadow var(--motion-standard) ease;
+}
+
+.hero-card-main:hover,
+.hero-card-main:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 28px 66px rgba(55, 45, 90, 0.17);
+}
+
+.hero-card-small:hover {
+  box-shadow: 0 16px 34px rgba(55, 45, 90, 0.13);
+}
+
+/* Gallery interaction: visual confirmation without exaggerated scaling. */
+.space-gallery-button {
+  transition: transform var(--motion-fast) var(--motion-ease), box-shadow var(--motion-fast) ease;
+}
+
+.space-gallery-button:hover,
+.space-gallery-button:focus-visible {
+  transform: translateY(-3px);
+}
+
+/* Lightbox has explicit entering/leaving states. */
+.space-lightbox {
+  opacity: 0;
+  transition: opacity var(--motion-standard) ease;
+}
+
+.space-lightbox:not([hidden]) {
+  opacity: 1;
+}
+
+.space-lightbox-dialog {
+  transform: translateY(12px) scale(0.985);
+  transition: transform var(--motion-standard) var(--motion-ease);
+}
+
+.space-lightbox:not([hidden]) .space-lightbox-dialog {
+  transform: none;
+}
+
+/* Image loading feedback is intentionally lightweight rather than a fake progress bar. */
+.space-lightbox-dialog.is-loading::before {
+  content: "Carregando foto…";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--color-text);
+  font-weight: 750;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-reveal,
+  .hero-card-main,
+  .hero-card-small,
+  .space-gallery-button,
+  .space-lightbox,
+  .space-lightbox-dialog {
+    transition: none;
+    transform: none;
+  }
+}
