@@ -63,11 +63,11 @@ if (lightbox && lightboxDialog && lightboxImage && lightboxClose && galleryButto
 
 const whatsappFloat = document.createElement('a');
 whatsappFloat.className = 'whatsapp-float';
-whatsappFloat.href = ['https://wa.me/', '5551997803232'].join('');
+whatsappFloat.href = 'https://wa.me/5551997803232';
 whatsappFloat.target = '_blank';
 whatsappFloat.rel = 'noopener noreferrer';
 whatsappFloat.setAttribute('aria-label', 'Falar com a PsicoIncluir pelo WhatsApp');
-whatsappFloat.innerHTML = '<span aria-hidden="true">◔</span><span>WhatsApp</span>';
+whatsappFloat.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 3.5A11.84 11.84 0 0 0 12.05 0C5.53 0 .22 5.31.22 11.83c0 2.08.54 4.1 1.57 5.88L.12 24l6.43-1.63a11.8 11.8 0 0 0 5.5 1.4h.01c6.52 0 11.82-5.31 11.82-11.83 0-3.16-1.23-6.13-3.38-8.44ZM12.06 21.8h-.01a9.86 9.86 0 0 1-5.02-1.38l-.36-.21-3.81.97 1.02-3.71-.23-.38a9.87 9.87 0 1 1 8.41 4.71Zm5.42-7.39c-.3-.15-1.78-.88-2.05-.98-.28-.1-.48-.15-.69.15-.2.3-.79.98-.96 1.18-.18.2-.35.23-.65.08-.3-.15-1.28-.47-2.43-1.5-.9-.8-1.5-1.78-1.68-2.08-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.03-.53-.08-.15-.69-1.65-.94-2.26-.25-.59-.5-.51-.69-.52h-.59c-.2 0-.53.08-.81.38-.28.3-1.06 1.04-1.06 2.54s1.08 2.95 1.23 3.15c.15.2 2.12 3.24 5.14 4.54.72.31 1.28.49 1.72.63.72.23 1.38.2 1.9.12.58-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.18-1.43-.08-.13-.28-.2-.58-.35Z"/></svg><span>WhatsApp</span>';
 document.body.appendChild(whatsappFloat);
 
 const motionTargets = document.querySelectorAll(
