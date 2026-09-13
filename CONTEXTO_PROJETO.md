@@ -104,6 +104,44 @@ Os prints do Instagram fornecidos no contexto do projeto devem ser tratados como
 
 Não inventar informações institucionais que não tenham sido fornecidas ou validadas.
 
+## Padrões obrigatórios de motion, carregamento e feedback
+
+A interface deve seguir princípios de motion design com foco em **propósito, sutileza, consistência, acessibilidade e performance**, usando como referência a skill **Design Motion Principles** de Kyle Zantos. A skill trabalha com lentes de contenção e velocidade, refinamento de produção e experimentação seletiva; para este site institucional/landing page, a prioridade deve ser o refinamento profissional e discreto, com criatividade apenas quando ela reforçar a identidade da PsicoIncluir. urlDesign Motion Principleshttps://github.com/kylezantos/design-motion-principles
+
+### Regras de motion
+- Toda animação deve ter uma função clara: orientar, contextualizar uma mudança, melhorar a percepção de resposta ou reforçar a hierarquia.
+- Evitar animações decorativas excessivas, entradas repetitivas, stagger em excesso, escalas exageradas, efeitos de blur generalizados e animações que pareçam artificiais ou geradas automaticamente.
+- Preferir transições curtas e suaves para interações frequentes e tempos deliberados apenas quando o contexto justificar.
+- Estados de entrada podem usar pequenas mudanças de opacidade e deslocamento; saídas devem ser mais discretas.
+- A origem da animação deve fazer sentido em relação ao elemento que a acionou.
+- Hover, focus, abertura/fechamento de modais, expansão de cards e mudanças de estado devem possuir transições consistentes.
+- Não animar tudo. Interações de alta frequência devem ser instantâneas ou quase instantâneas quando a animação não acrescentar valor.
+- Toda animação deve respeitar `prefers-reduced-motion`, reduzindo ou removendo movimentos não essenciais.
+
+### Carregamento e progresso
+- Usar **lazy loading** em imagens e recursos que não sejam necessários no primeiro viewport, especialmente na galeria e demais imagens abaixo da dobra.
+- Usar **skeleton screens** ou placeholders estruturais quando houver conteúdo que realmente dependa de carregamento assíncrono, evitando telas vazias ou mudanças bruscas de layout.
+- Preservar dimensões/áreas reservadas para imagens para evitar layout shift.
+- Elementos interativos que executem uma ação assíncrona devem apresentar **estado de progresso/loading** e impedir ações duplicadas quando necessário.
+- Após uma ação, fornecer **feedback visual claro** de sucesso, erro, mudança de estado ou conclusão.
+- Não usar spinners ou indicadores animados sem necessidade; o estado de carregamento deve comunicar o que está acontecendo.
+
+### Consistência de transições
+- Cards, listas, modais, menus, navegação por âncoras e estados condicionais devem compartilhar uma linguagem de movimento consistente.
+- Entradas e saídas devem parecer parte do mesmo sistema, evitando cada componente usar uma animação diferente sem justificativa.
+- Scroll suave deve ser usado quando apropriado, sem prejudicar navegação por teclado ou `prefers-reduced-motion`.
+- Foco de teclado deve permanecer perceptível e não deve depender exclusivamente de movimento.
+
+### Revisão de qualidade visual
+Antes de considerar uma entrega de interface concluída, o agente deve fazer uma revisão como **designer de produto sênior**, procurando e corrigindo elementos que pareçam bruscos, travados, genéricos, inconsistentes ou amadores. A revisão deve considerar:
+- ritmo e duração das animações;
+- coerência entre estados de entrada, saída, hover e focus;
+- feedback de ações e estados de progresso;
+- carregamento e ausência de layout shift;
+- comportamento em mobile, tablet e desktop;
+- acessibilidade e `prefers-reduced-motion`;
+- performance e uso responsável de recursos.
+
 ## Roadmap inicial
 
 ### Nova função
