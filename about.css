@@ -1,0 +1,19 @@
+.about-section { background: var(--color-surface-soft); }
+
+.about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 0.82fr); gap: clamp(40px, 7vw, 88px); align-items: center; }
+.about-content > p:not(.eyebrow) { max-width: 650px; color: var(--color-muted); font-size: 1.06rem; }
+.about-content > p:last-child { margin-bottom: 0; }
+.about-panel { position: relative; overflow: hidden; min-height: 500px; border-radius: 32px; background: linear-gradient(145deg, #6847b8, #4f3590); color: #fff; box-shadow: 0 24px 60px rgba(55,45,90,.16); }
+.about-panel-content { position: relative; z-index: 2; padding: clamp(28px, 5vw, 44px); }
+.about-badge { display: inline-flex; padding: 7px 12px; border: 1px solid rgba(255,255,255,.28); border-radius: 999px; background: rgba(255,255,255,.1); font-size: .78rem; font-weight: 800; letter-spacing: .04em; }
+.about-panel h3 { max-width: 420px; margin: 22px 0 28px; font-size: clamp(1.7rem, 3vw, 2.35rem); line-height: 1.15; letter-spacing: -.02em; }
+.about-points { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
+.about-points li { display: grid; gap: 3px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.2); }
+.about-points strong { font-size: 1rem; }
+.about-points span { color: rgba(255,255,255,.8); font-size: .92rem; }
+.about-panel-shape { position: absolute; border-radius: 42% 58% 60% 40% / 48% 38% 62% 52%; pointer-events: none; }
+.about-panel-shape-one { width: 220px; height: 220px; top: -90px; right: -40px; background: rgba(235,79,138,.42); transform: rotate(20deg); }
+.about-panel-shape-two { width: 180px; height: 180px; bottom: -80px; left: -60px; background: rgba(56,169,201,.3); transform: rotate(-18deg); }
+
+@media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } .about-panel { min-height: auto; } }
+@media (max-width: 760px) { .about-panel { border-radius: 24px; } .about-panel-content { padding: 28px 24px; } }
